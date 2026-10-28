@@ -66,7 +66,7 @@ export async function convertPdf(file: File, target: string, s: ConvertSettings,
 
     const pages = await extractPdfText(doc, onProgress);
     if (!pages.some((p) => p.some((l) => l.trim()))) {
-      throw new Error('PDF ini tidak berisi teks yang bisa dibaca (kemungkinan hasil scan). Konversi ke PNG/JPG, atau gunakan OCR.');
+      throw new Error('PDF ini tidak berisi teks yang bisa dibaca (kemungkinan hasil scan). Aplikasi ini belum punya OCR. Konversi ke PNG/JPG, atau pakai aplikasi OCR terpisah.');
     }
     const note = 'Hanya teks yang diekstrak; tata letak, tabel, dan gambar tidak dipertahankan.';
 
