@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="id" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>OmniConvert Pro — Konverter, Scanner & Editor PDF</title>
+    <meta name="description" content="Konversi file, pindai dokumen jadi PDF, dan edit/tanda tangan PDF. 100% berjalan di perangkatmu, tanpa upload." />
+    <meta name="theme-color" content="#070b17" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="OmniConvert" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="format-detection" content="telephone=no" />
+    <script>
+      // Terapkan tema sebelum render agar tidak berkedip.
+      try {
+        var t = localStorage.getItem('omni-theme');
+        var d = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.classList.toggle('dark', d);
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute('content', d ? '#070b17' : '#eef2ff');
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
