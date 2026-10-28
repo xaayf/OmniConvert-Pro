@@ -1,7 +1,7 @@
 {
   "name": "omniconvert-pro",
   "private": true,
-  "version": "4.0.0",
+  "version": "4.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,10 +9,15 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "icons": "node scripts/generate-icons.mjs"
+    "icons": "node scripts/generate-icons.mjs",
+    "prebuild": "node scripts/copy-ocr.mjs",
+    "predev": "node scripts/copy-ocr.mjs",
+    "pretypecheck": "node scripts/copy-ocr.mjs"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.3.0",
+    "@tesseract.js-data/eng": "^1.0.0",
+    "@tesseract.js-data/ind": "^1.0.0",
     "docx": "^9.15.0",
     "exceljs": "^4.4.0",
     "fflate": "^0.8.3",
@@ -24,6 +29,8 @@
     "pdfjs-dist": "^6.4.299",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
+    "tesseract.js": "^7.0.0",
+    "tesseract.js-core": "^7.0.0",
     "turndown": "^7.2.4"
   },
   "devDependencies": {

@@ -19,6 +19,7 @@ import {
 import { blocksToDocx, htmlToMarkdown } from './office';
 import { canvasToBlob, grayscaleCanvas } from './image';
 import { extractPdfText, openPdf, renderPageToCanvas } from './pdfjs';
+import { ocrPdfPages } from './ocr';
 import type { ConvertResult, ConvertSettings, ProgressFn } from './types';
 
 void imagesToPdf; // diekspor untuk modul lain; hindari peringatan tree-shaking
@@ -64,11 +65,14 @@ export async function convertPdf(file: File, target: string, s: ConvertSettings,
       return { blob: zipEntries(entries), fileName: `${name}_${ext}.zip`, note: `${entries.length} halaman dikemas dalam ZIP.${note ? ' ' + note : ''}` };
     }
 
-    const pages = await extractPdfText(doc, onProgress);
+    let pages = await extractPdfText(doc, onProgress);
+    let note = 'Hanya teks yang diekstrak; tata letak, tabel, dan gambar tidak dipertahankan.';
     if (!pages.some((p) => p.some((l) => l.trim()))) {
-      throw new Error('PDF ini tidak berisi teks yang bisa dibaca (kemungkinan hasil scan). Aplikasi ini belum punya OCR. Konversi ke PNG/JPG, atau pakai aplikasi OCR terpisah.');
+      // PDF hasil scan (tanpa lapisan teks): pakai OCR lokal
+      pages = await ocrPdfPages(doc, onProgress);
+      if (!pages.some((p) => p.some((l) => l.trim()))) throw new Error('OCR tidak menemukan teks. Pastikan halaman cukup tajam dan terang.');
+      note = 'Teks dibaca dengan OCR (Indonesia + Inggris) — periksa kembali, bisa ada salah baca. Tata letak tidak dipertahankan.';
     }
-    const note = 'Hanya teks yang diekstrak; tata letak, tabel, dan gambar tidak dipertahankan.';
 
     switch (target) {
       case 'TXT':

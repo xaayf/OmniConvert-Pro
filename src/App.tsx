@@ -10,6 +10,7 @@ import { useOnline, usePwaInstall, usePwaUpdate } from './hooks/usePwa';
 const ConverterView = lazy(() => import('./features/converter/ConverterView'));
 const ScannerView = lazy(() => import('./features/scanner/ScannerView'));
 const StudioView = lazy(() => import('./features/pdfstudio/StudioView'));
+const ToolsView = lazy(() => import('./features/tools/ToolsView'));
 
 const OFFLINE_KEY = 'omni-offline-ready';
 const readFlag = () => {
@@ -36,7 +37,7 @@ function Shell() {
   const install = usePwaInstall();
   const [tab, setTab] = useState<Workspace>('converter');
   const [mounted, setMounted] = useState<Set<Workspace>>(() => new Set(['converter']));
-  const [work, setWork] = useState<Record<Workspace, number>>({ converter: 0, scanner: 0, studio: 0 });
+  const [work, setWork] = useState<Record<Workspace, number>>({ converter: 0, scanner: 0, studio: 0, tools: 0 });
   const [offlineFlag, setOfflineFlag] = useState(readFlag);
 
   useEffect(() => {
@@ -59,12 +60,13 @@ function Shell() {
     () => ({
       converter: (n: number) => setWork((p) => (p.converter === n ? p : { ...p, converter: n })),
       scanner: (n: number) => setWork((p) => (p.scanner === n ? p : { ...p, scanner: n })),
-      studio: (n: number) => setWork((p) => (p.studio === n ? p : { ...p, studio: n }))
+      studio: (n: number) => setWork((p) => (p.studio === n ? p : { ...p, studio: n })),
+      tools: (n: number) => setWork((p) => (p.tools === n ? p : { ...p, tools: n }))
     }),
     []
   );
 
-  const total = work.converter + work.scanner + work.studio;
+  const total = work.converter + work.scanner + work.studio + work.tools;
   useEffect(() => {
     if (!total) return;
     const warn = (e: BeforeUnloadEvent) => {
@@ -111,6 +113,7 @@ function Shell() {
       <main className="mx-auto w-full max-w-6xl px-safe px-4 pb-24 pt-4">
         {view('converter', <ConverterView active={tab === 'converter'} onWorkChange={setCounter.converter} />)}
         {view('scanner', <ScannerView active={tab === 'scanner'} onWorkChange={setCounter.scanner} />)}
+        {view('tools', <ToolsView active={tab === 'tools'} onWorkChange={setCounter.tools} />)}
         {view('studio', <StudioView active={tab === 'studio'} onWorkChange={setCounter.studio} />)}
 
         <footer className="mt-10 flex flex-col items-center gap-2 text-center text-[11px] text-slate-500 dark:text-slate-400">

@@ -11,7 +11,7 @@ const DOC_EXT = ['pdf', 'docx', 'txt', 'md', 'html', 'htm', 'xml'];
 const DATA_EXT = ['xlsx', 'csv', 'tsv', 'json'];
 
 /** Format target per jenis input. Semua di sini sudah punya implementasi nyata. */
-const IMAGE_TARGETS = ['PNG', 'JPG', 'WEBP', 'BMP', 'ICO', 'SVG', 'PDF'];
+const IMAGE_TARGETS = ['PNG', 'JPG', 'WEBP', 'BMP', 'ICO', 'SVG', 'PDF', 'TXT', 'DOCX'];
 const PDF_TARGETS = ['PNG', 'JPG', 'TXT', 'MD', 'HTML', 'DOCX'];
 const DOCX_TARGETS = ['PDF', 'TXT', 'MD', 'HTML'];
 const TEXT_TARGETS = ['PDF', 'DOCX', 'TXT', 'MD', 'HTML'];

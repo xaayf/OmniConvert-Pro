@@ -1,13 +1,14 @@
 import { useEffect, useRef } from 'react';
-import { ArrowUpCircle, Download, FileSignature, Moon, RefreshCw, ScanLine, ShieldCheck, Sun, WifiOff } from 'lucide-react';
+import { ArrowUpCircle, Combine, Download, FileSignature, Moon, RefreshCw, ScanLine, ShieldCheck, Sun, WifiOff } from 'lucide-react';
 import { Button, cx } from './ui';
 
-export type Workspace = 'converter' | 'scanner' | 'studio';
+export type Workspace = 'converter' | 'scanner' | 'studio' | 'tools';
 
 const TABS: { id: Workspace; label: string; short: string; icon: typeof RefreshCw }[] = [
   { id: 'converter', label: 'Konverter File', short: 'Konversi', icon: RefreshCw },
   { id: 'scanner', label: 'Scanner → PDF', short: 'Scanner', icon: ScanLine },
-  { id: 'studio', label: 'PDF Studio', short: 'Studio', icon: FileSignature }
+  { id: 'studio', label: 'PDF Studio', short: 'Studio', icon: FileSignature },
+  { id: 'tools', label: 'Gabung & Pisah', short: 'Alat', icon: Combine }
 ];
 
 interface Props {

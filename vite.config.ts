@@ -49,6 +49,15 @@ export default defineConfig({
         // Semua aset (termasuk worker pdf.js & chunk lazy) di-precache => benar-benar offline.
         globPatterns: ['**/*.{js,mjs,css,html,svg,png,ico,woff2,webmanifest}'],
         maximumFileSizeToCacheInBytes: 12 * 1024 * 1024,
+        // Aset OCR besar tidak di-precache; di-cache saat pertama dipakai lalu tersedia offline.
+        globIgnores: ['ocr/**'],
+        runtimeCaching: [
+          {
+            urlPattern: ({ url }: { url: URL }) => url.pathname.startsWith('/ocr/'),
+            handler: 'CacheFirst',
+            options: { cacheName: 'omni-ocr-v1', expiration: { maxEntries: 12 }, cacheableResponse: { statuses: [200] } }
+          }
+        ],
         navigateFallback: '/index.html',
         cleanupOutdatedCaches: true
       }
